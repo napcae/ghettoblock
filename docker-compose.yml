@@ -4,3 +4,9 @@ services:
     image: redis 
     ports:
       - "127.0.0.1:6379:6379"
+  nginx:
+    image: nginx
+    ports: 
+      - "127.0.0.1:1337:80"
+    volumes:
+      - "./:/usr/share/nginx/html"

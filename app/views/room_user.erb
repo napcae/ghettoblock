@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= username.capitalize %>'s room</title>
+    <script>
+        if (top != self) {
+            top.location.replace(self.location.href);
+        }
+    </script>
+    <script src="//cdn.jsdelivr.net/clappr/latest/clappr.min.js"></script>
+</head>
+<body>
+    BLOCKPARTY - Hey <%= username.capitalize %>! 💩
+    <div id="main" style="width:1280px;">
+<div id="player" style="width:1280px"></div>
+
+
+<p id="demo"></p>
+
+<input placeholder="Search"></input>
+
+<button type="button" onclick="loadDoc()">Play!</button>
+<p>Window height: <span id="height"></span></p>
+<p>Window width: <span id="width"></span></p>
+</div>
+
+
+<script>
+    var player = new window.Clappr.Player({
+        // source: 'https://ghettonetflix.de/party/ants/stream.m3u8',
+        source: 'http://127.0.0.1:1337/<%= params["user"] %>.mp4',
+        parentId: '#player'
+    });
+
+    function loadDoc() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          document.getElementById("demo").innerHTML = this.responseText;
+        }
+      };
+      xhttp.open("GET", "http://127.0.0.1:9393/background", true);
+      xhttp.send();
+    }
+
+    const heightOutput = document.querySelector('#height');
+    const widthOutput = document.querySelector('#width');
+
+    function reportWindowSize() {
+      heightOutput.textContent = window.innerHeight;
+      widthOutput.textContent = window.innerWidth;
+    }
+    function reportState() {
+      player.isPlaying
+    }
+
+    window.onresize = reportWindowSize;
+    //window.onresize = console.log("test");
+</script>
+</body>
+</html>
